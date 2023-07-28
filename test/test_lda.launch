@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="plugin" default='rosneuro::decoder::Lda'/>
+	<arg name="cfg_name" default='LdaCfg'/>
+    <arg name="datapath" default="$(find rosneuro_decoder_lda)"/>
+	
+    <rosparam command="load" file="$(find rosneuro_decoder_lda)/test/ldaCfg.yaml"/>
+	<node name="test_lda" pkg="rosneuro_decoder_lda" type="test_lda" output="screen" >
+		<param name="~plugin" 	  value="$(arg plugin)"/>
+        <param name="cfg_name" 	  value="$(arg cfg_name)"/>
+        <param name="datapath"    value="$(arg datapath)" />
+        
+	</node>
+		
+</launch>
