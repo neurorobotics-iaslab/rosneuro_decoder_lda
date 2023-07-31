@@ -4,6 +4,8 @@ clc;clearvars;close all;
 npat = 1000;
 
 %% create synthetic data
+disp(['Creating new data, so after you need to run LDA classifier with rosneuro and to compare the results run only the final' ...
+    'three sections']);
 r1 = 0.5 + 0.95*randn(npat,5);
 r2 = 1.5 + 0.95*randn(npat*2,5);
 data = [r1;r2];

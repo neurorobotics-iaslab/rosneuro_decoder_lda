@@ -11,7 +11,7 @@ namespace rosneuro{
             this->is_configured_ = false;
         }
 
-        Lda::~Lda(void){};
+        Lda::~Lda(void){}
 
         bool Lda::configure(void){
             // get the parameters
@@ -110,6 +110,7 @@ namespace rosneuro{
                 den = den + c_lh * this->config_.priors.at(i);
             }
 
+            // compute the posterior probability
             Eigen::VectorXf output(lh.size(),1);
             for(int i = 0; i < this->config_.nclasses; i++){
                 double c_post = (lh.at(i) * this->config_.priors.at(i)) / den;

@@ -37,15 +37,15 @@ namespace rosneuro{
                 Eigen::VectorXf getFeatures(const Eigen::MatrixXf& in);
 
                 std::string path(void);
-                std::vector<int> classes();
+                std::vector<int> classes(void);
 
             private:
                 bool check_dimension(void);
 
             private:
                 ros::NodeHandle p_nh_;
-                Eigen::MatrixXf means_;
-                Eigen::MatrixXf covs_;
+                Eigen::MatrixXf means_; // [nfeatures x nclasses]
+                Eigen::MatrixXf covs_; // [nfeatures x nfeatures]
                 ldaconfig_t config_;
 
         };
