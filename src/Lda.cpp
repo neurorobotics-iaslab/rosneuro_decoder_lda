@@ -82,12 +82,6 @@ namespace rosneuro{
                 return false;
             }
 
-            // Check if more than 2 classes
-            if(this->config_.nclasses != 2 || this->config_.classlbs.size() != 2){
-                ROS_ERROR("[%s] The classifier works only for two classes", this->name().c_str());
-                return false;
-            }
-
             this->is_configured_ = true;
 
             return this->is_configured_;
@@ -104,21 +98,24 @@ namespace rosneuro{
 
         Eigen::VectorXf Lda::apply(const Eigen::VectorXf& in){
             double coeff = 1/ std::sqrt(this->covs_.determinant() * pow( 2 * M_PI, in.size()));
-            double exp1 = - 0.5 * ((in - this->means_.col(0)).transpose() * this->covs_.inverse() * (in - this->means_.col(0)))(0,0);
-            double exp2 = - 0.5 * ((in - this->means_.col(1)).transpose() * this->covs_.inverse() * (in - this->means_.col(1)))(0,0);
-            double lh1 = coeff * std::exp(exp1);
-            double lh2 = coeff * std::exp(exp2);
 
-            double post1 = lh1 * this->config_.priors.at(0) / (lh1 * this->config_.priors.at(0) + lh2 * this->config_.priors.at(1));
-            double post2 = lh2 * this->config_.priors.at(1) / (lh1 * this->config_.priors.at(0) + lh2 * this->config_.priors.at(1));
+            std::vector<double> lh;
+            double den = 0.0;
+            for(int i = 0; i < this->config_.nclasses; i++){
+                double exp =  - 0.5 * ((in - this->means_.col(i)).transpose() * this->covs_.inverse() * (in - this->means_.col(i)))(0,0);
+                double c_lh = coeff * std::exp(exp);
 
-            Eigen::VectorXf output(2,1);
-            if(std::max(post1, post2) == post1){
-                output << std::max(post1, post2), 1.0-std::max(post1, post2);
-            }else{
-                output << 1.0 - std::max(post1, post2), std::max(post1, post2);
+                lh.push_back(c_lh);
+
+                den = den + c_lh * this->config_.priors.at(i);
             }
 
+            Eigen::VectorXf output(lh.size(),1);
+            for(int i = 0; i < this->config_.nclasses; i++){
+                double c_post = (lh.at(i) * this->config_.priors.at(i)) / den;
+                output(i,0) = c_post;
+            }
+            
             return output;
         }
 
@@ -172,8 +169,10 @@ namespace rosneuro{
                 return false;
             }
 
-            if(this->config_.priors.size() != this->config_.nclasses){
-                ROS_ERROR("[%s] Wrong dimensions in the 'priors' parameter", this->name().c_str());
+            // check classes size
+            if(this->config_.priors.size() != this->config_.nclasses |\
+               this->config_.nclasses != this->config_.classlbs.size()){
+                ROS_ERROR("[%s] Wrong dimensions in the given classes parameters", this->name().c_str());
                 return false;
             }
 
