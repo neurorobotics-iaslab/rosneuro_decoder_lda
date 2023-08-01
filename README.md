@@ -4,8 +4,10 @@ This package implements a LDA classifier as a plugin for rosneuro::decoder::Deco
 
 ## Usage
 The package required as ros parameter:
-    - **cfg_name**: which is the name of the structure in the yaml file
-    - **yaml file**: which contains the structure for the lda classifier
+<ul>
+    <li> **cfg_name**: which is the name of the structure in the yaml file </li>
+    <li> **yaml file**: which contains the structure for the lda classifier </li>
+</ul>
 
 ## Example of yaml file
 ```
@@ -36,6 +38,6 @@ LdaCfg:
 
 Some parameters are hard coded:
     - **idchans**: the index of the channels from 1 to the number of channels used;
-    - **freqs:**: the selected frequencies;
+    - **freqs**: the selected frequencies;
     - **means**: matrix of [features x classes];
     - **covs**: matrix of [features x features]. 
