@@ -6,7 +6,7 @@ This package implements a LDA classifier as a plugin for rosneuro::decoder::Deco
 The package required as ros parameter:
 <ul>
     <li> <b>cfg_name</b>: which is the name of the structure in the yaml file </li>
-    <li> <b>yaml</b> file**: which contains the structure for the lda classifier </li>
+    <li> <b>yaml file</b>: which contains the structure for the lda classifier </li>
 </ul>
 
 ## Example of yaml file
