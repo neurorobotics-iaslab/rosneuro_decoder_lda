@@ -41,7 +41,7 @@ hold off
 disp(['accuracy: ' num2str(accuracy)]);
 
 %% Load rosneuro probabilities
-disp('load the data compute with rosneuro')
+disp('load the computed raw probability of rosneuro lda decoder')
 load('/home/paolo/rosneuro_ws/src/rosneuro_decoder_lda/test/output.csv');
 
 %% See differences
