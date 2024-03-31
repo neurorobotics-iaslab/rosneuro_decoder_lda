@@ -4,7 +4,7 @@
 #include <pluginlib/class_list_macros.h>
 #include <dynamic_reconfigure/server.h>
 #include <ros/ros.h>
-
+#include <gtest/gtest_prod.h>
 #include "rosneuro_decoder/GenericDecoder.h"
 
 namespace rosneuro{
@@ -48,6 +48,12 @@ namespace rosneuro{
                 Eigen::MatrixXf covs_; // [nfeatures x nfeatures]
                 ldaconfig_t config_;
 
+                FRIEND_TEST(LdaTestSuite, Constructor);
+                FRIEND_TEST(LdaTestSuite, Configure);
+                FRIEND_TEST(LdaTestSuite, CheckDimensionMeans);
+                FRIEND_TEST(LdaTestSuite, CheckDimensionCovs);
+                FRIEND_TEST(LdaTestSuite, CheckDimensionSize);
+                FRIEND_TEST(LdaTestSuite, Apply);
         };
     }
 }
