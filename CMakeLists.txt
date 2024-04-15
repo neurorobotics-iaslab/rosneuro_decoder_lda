@@ -67,7 +67,7 @@ add_dependencies(${PROJECT_NAME}
 				 ${catkin_EXPORTED_TARGETS}
 )
 
-add_executable(test_lda test/test_lda.cpp)
+add_executable(test_lda example/test_lda.cpp)
 target_link_libraries(test_lda ${catkin_LIBRARIES} fftw3)
 
 #################
