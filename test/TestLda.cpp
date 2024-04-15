@@ -35,18 +35,18 @@ namespace rosneuro {
             params["name"] = "lda";
             params["filename"] = "file1";
             params["subject"] = "s1";
-            params["nclasses"] = 2;
+            params["n_classes"] = 2;
             params["n_features"] = 5;
             params["lambda"] = 0.5;
 
-            XmlRpc::XmlRpcValue priors, classlbs, idchans;
+            XmlRpc::XmlRpcValue priors, class_lbs, idchans;
             priors[0] = 0.5;
             priors[1] = 0.5;
             params["priors"] = priors;
 
-            classlbs[0] = 771;
-            classlbs[1] = 773;
-            params["classlbs"] = classlbs;
+            class_lbs[0] = 771;
+            class_lbs[1] = 773;
+            params["class_lbs"] = class_lbs;
 
             idchans[0] = 1;
             idchans[1] = 2;
