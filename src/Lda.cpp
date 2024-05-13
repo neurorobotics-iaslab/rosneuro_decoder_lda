@@ -62,14 +62,6 @@ namespace rosneuro{
             return this->is_configured_;
         }
 
-        bool Lda::isSet(void){
-            if(!this->is_configured_){
-                ROS_ERROR("[%s] Decoder not configured", this->getName().c_str());
-                return false;
-            }
-            return this->is_configured_;
-        }
-
         Eigen::VectorXf Lda::apply(const Eigen::VectorXf& input) {
             double normalization_coefficient = calculateNormalizationCoefficient(input.size());
 
@@ -120,28 +112,11 @@ namespace rosneuro{
         }
 
         std::vector<int> Lda::getClasses(void){
-            this->isSet();
-            std::vector<int> classes_lbs;
-            for(int i = 0; i < this->config_.class_lbs.size(); i++){
-                classes_lbs.push_back((int) this->config_.class_lbs.at(i));
-            }
-            return classes_lbs;
+            return defineClasses(this->config_.class_lbs);
         }
 
-        Eigen::VectorXf Lda::getFeatures(const Eigen::MatrixXf& input) {
-            this->isSet();
-            Eigen::VectorXf features(this->config_.n_features);
-
-            int feature_index = 0;
-            for (int channel_index = 0; channel_index < this->config_.idchans.size(); channel_index++) {
-                int channel_id = this->config_.idchans.at(channel_index) - 1;
-                for (const auto& frequency : this->config_.freqs.at(channel_index)) {
-                    int frequency_id = static_cast<int>(frequency / 2.0);
-                    features(feature_index) = input(channel_id, frequency_id);
-                    feature_index++;
-                }
-            }
-            return features.transpose();
+        Eigen::VectorXf Lda::getFeatures(const Eigen::MatrixXf& in) {
+            return computeFeatures(in, this->config_.n_features, this->config_.idchans, this->config_.freqs);
         }
 
         bool Lda::checkDimension(void){
