@@ -39,6 +39,14 @@ catkin_package(
 )
 
 ##############################################################################
+# TEST
+##############################################################################
+
+catkin_add_gtest(TestLda test/TestLda.cpp)
+target_link_libraries(TestLda ${GTEST_BOTH_LIBRARIES} pthread gmock)
+target_link_libraries(TestLda ${PROJECT_NAME} ${catkin_LIBRARIES})
+
+##############################################################################
 # Build
 ##############################################################################
 
@@ -59,8 +67,8 @@ add_dependencies(${PROJECT_NAME}
 				 ${catkin_EXPORTED_TARGETS}
 )
 
-add_executable(test_lda test/test_lda.cpp)
-target_link_libraries(test_lda ${catkin_LIBRARIES} fftw3)
+add_executable(run_lda example/run_lda.cpp)
+target_link_libraries(run_lda ${catkin_LIBRARIES} fftw3)
 
 #################
 ##   Install   ##

@@ -3,9 +3,9 @@ LdaCfg:
   params:
     filename: "file1"
     subject: "s1"
-    nclasses: 2
-    classlbs: [771, 773]
-    nfeatures: 5
+    n_classes: 2
+    class_lbs: [771, 773]
+    n_features: 5
     idchans: [1, 2]
     freqs: "10 12;
             20 22 24;"
